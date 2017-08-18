@@ -3,6 +3,7 @@ package click.tagit;
 import android.app.Application;
 import click.tagit.data.remote.ClickTagitRESTClientSingleton;
 import com.facebook.stetho.Stetho;
+import net.danlew.android.joda.JodaTimeAndroid;
 import timber.log.Timber;
 
 /**
@@ -19,8 +20,8 @@ public class ClickTagitApplication extends Application {
         plantTimber();
         // Initialize network library
         ClickTagitRESTClientSingleton.INSTANCE.init();
-
         Stetho.initializeWithDefaults(this);
+        JodaTimeAndroid.init(this);
     }
 
     /**

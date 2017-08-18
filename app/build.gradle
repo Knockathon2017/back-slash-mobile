@@ -63,6 +63,10 @@ dependencies {
     // An Adapter for adapting RxJava 2.x types.
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
 
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
     // An OkHttp interceptor which logs HTTP request and response data.
     compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
 
@@ -87,6 +91,17 @@ dependencies {
 
     // EasyPermissions
     compile 'pub.devrel:easypermissions:0.4.0'
+
+    // Google Image Lib Glide
+    // TODO: check update library
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC0'
+    compile "com.github.bumptech.glide:okhttp3-integration:4.0.0-RC0"
+
+    compile 'com.wdullaer:materialdatetimepicker:3.2.3'
+
+    // This library is a version of Joda-Time built with Android in mind.
+    compile 'net.danlew:android.joda:2.9.9'
 
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->

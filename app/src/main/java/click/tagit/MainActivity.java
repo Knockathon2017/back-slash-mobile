@@ -1,5 +1,7 @@
 package click.tagit;
 
+import static click.tagit.detail.DetailActivity.mIsGreviance;
+
 import android.Manifest.permission;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import click.tagit.categorized.CategorizedFragment.OnListCategorizeFragmentInteractionListener;
 import click.tagit.categorized.dummy.DummyContent.DummyItem;
+import click.tagit.detail.DetailActivity;
+import click.tagit.detail.DetailActivity_;
 import click.tagit.grievance.GrievanceFragment.OnListGrievanceFragmentInteractionListener;
 import click.tagit.grievance.dummy.DummyContent;
 import click.tagit.uncategorized.UncategorizedFragment.OnListUncategorizedFragmentInteractionListener;
@@ -61,14 +65,21 @@ public class MainActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    return true;
+                    if(!mIsGreviance){
+                        DetailActivity_.intent(MainActivity.this).mIsText(true).start();
+                        return true;
+                    }
+                    return false;
                 case R.id.navigation_dashboard:
                     mTempImageURI = null;
                     mTempImagePath = null;
                     checkCameraPermission();
                     return true;
                 case R.id.navigation_notifications:
-                    return true;
+                    if(!mIsGreviance){
+                        return true;
+                    }
+                    return false;
             }
             return false;
         }
@@ -227,6 +238,8 @@ public class MainActivity extends AppCompatActivity implements
             if (resultCode == RESULT_OK) {
                 Timber.d("onActivityResult: capture photo success");
 
+                DetailActivity_.intent(MainActivity.this).mTempImagePath(mTempImagePath)
+                        .mTempImageURI(mTempImageURI).start();
             } else { // Result was a failure
                 Timber.e("onActivityResult: capture photo failure");
             }

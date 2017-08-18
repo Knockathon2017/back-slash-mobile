@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="click.tagit.detail.DetailActivity">
+
+  <data>
+    <import type="android.view.View" />
+    <variable
+      name="detailModel"
+      type="click.tagit.detail.DetailModel" />
+    <variable
+      name="isEnabled"
+      type="boolean" />
+  </data>
+
+  <ScrollView
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/screen_spacing_vertical"
+    android:paddingStart="@dimen/screen_spacing_horizontal"
+    android:paddingEnd="@dimen/screen_spacing_horizontal">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24px" />
+
+      <TextView
+        android:id="@+id/text_view_predefined_category"
+        android:layout_marginTop="@dimen/view_spacing_medium"
+        android:layout_width="wrap_content"
+        android:visibility="@{isEnabled ? View.VISIBLE : View.GONE}"
+        android:layout_height="wrap_content" />
+
+      <Button
+        android:visibility="@{isEnabled ? View.VISIBLE : View.GONE}"
+        android:id="@+id/button_predefined_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose category" />
+
+      <EditText
+        android:visibility="@{isEnabled ? View.VISIBLE : View.GONE}"
+        android:id="@+id/edit_text_user_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@={detailModel.category}"
+        android:layout_marginTop="@dimen/view_spacing_medium"
+        android:hint="your custom category" />
+
+      <EditText
+        android:id="@+id/edit_text_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@={detailModel.tags}"
+        android:layout_marginTop="@dimen/view_spacing_medium"
+        android:hint="tags comma separated" />
+
+      <EditText
+        android:id="@+id/edit_text_description"
+        android:layout_width="match_parent"
+        android:text="@={detailModel.description}"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_spacing_medium"
+        android:hint="description" />
+
+      <TextView
+        android:id="@+id/text_view_alarm"
+        android:layout_marginTop="@dimen/view_spacing_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+      <Button
+        android:id="@+id/button_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set reminder" />
+
+      <Button
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/view_spacing_medium"
+        android:text="Submit" />
+    </LinearLayout>
+  </ScrollView>
+</layout>
