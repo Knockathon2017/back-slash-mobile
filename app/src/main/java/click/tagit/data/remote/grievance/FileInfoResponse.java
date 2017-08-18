@@ -9,7 +9,7 @@ import java.util.List;
  *   * Date: 19/8/17
  *   * Time: 4:02 AM
  */
-public class FileInfo {
+public class FileInfoResponse {
 
     @Expose
     @SerializedName("message")
@@ -17,6 +17,9 @@ public class FileInfo {
     @Expose
     @SerializedName("status")
     private short status;
+    @SerializedName("data")
+    @Expose
+    private List<Data> data = null;
 
     public String getMessage() {
         return message;
@@ -41,8 +44,4 @@ public class FileInfo {
     public void setData(List<Data> data) {
         this.data = data;
     }
-
-    @SerializedName("data")
-    @Expose
-    private List<Data> data = null;
 }

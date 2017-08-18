@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import click.tagit.categorized.CategorizedFragment.OnListCategorizeFragmentInteractionListener;
 import click.tagit.categorized.dummy.DummyContent.DummyItem;
+import click.tagit.data.remote.grievance.Data;
 import click.tagit.detail.DetailActivity;
 import click.tagit.detail.DetailActivity_;
 import click.tagit.grievance.GrievanceFragment.OnListGrievanceFragmentInteractionListener;
@@ -137,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Data data) {
+        Timber.d("onListFragmentInteraction() called with: data = [" + data + "]");
 
     }
 

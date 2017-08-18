@@ -7,9 +7,8 @@ import com.google.gson.annotations.SerializedName;
  *   * User: Anurag Singh
  *   * Date: 19/8/17
  *   * Time: 4:07 AM
- *
  */
-class Data {
+public class Data {
 
     @Expose
     @SerializedName("tags")
@@ -32,6 +31,28 @@ class Data {
     @Expose
     @SerializedName("fileName")
     private String fileName;
+    @Expose
+    @SerializedName("thumbnail")
+    private String thumbnail;
+    @Expose
+    @SerializedName("originalFile")
+    private String originalFile;
+
+    public String getOriginalFile() {
+        return originalFile;
+    }
+
+    public void setOriginalFile(String originalFile) {
+        this.originalFile = originalFile;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
     public String getTags() {
         return tags;
