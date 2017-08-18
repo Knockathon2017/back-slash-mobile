@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">Click&amp;Tag</string>
+  <string name="action_settings">Settings</string>
+  <string name="section_format">Hello World from section: %1$d</string>
+  <string name="title_home">Text</string>
+  <string name="title_dashboard">Camera</string>
+  <string name="title_notifications">Barcode</string>
+</resources>

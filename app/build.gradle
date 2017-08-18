@@ -1,0 +1,98 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "click.tagit"
+        minSdkVersion 22
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        // If you have different applicationIds for buildTypes or productFlavors uncomment this block.
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["resourcePackageName": android.defaultConfig.applicationId]
+            }
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "URL_BASE", project.production)
+        }
+
+        debug {
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "URL_BASE", project.production)
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile 'com.android.support:design:26.0.0-alpha1'
+    compile 'com.android.support:support-v4:26.0.0-alpha1'
+    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+
+    testCompile 'junit:junit:4.12'
+
+    // AndroidAnnotations works in a very simple way.
+    // It automatically adds an extra compilation step that generates source code,
+    // using the standard Java Annotation Processing Tool.
+    annotationProcessor "org.androidannotations:androidannotations:4.3.1"
+    compile "org.androidannotations:androidannotations-api:4.3.1"
+
+    // Networking Retrofit & OkHttp
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+
+    // An Adapter for adapting RxJava 2.x types.
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+
+    // An OkHttp interceptor which logs HTTP request and response data.
+    compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+
+    // For realm data Stetho for Android debug builds only for debugging data
+    debugCompile 'com.facebook.stetho:stetho:1.5.0'
+
+    // Network logger in browser view
+    debugCompile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    // Google Image Lib Glide
+    // TODO: check update library
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC0'
+    compile "com.github.bumptech.glide:okhttp3-integration:4.0.0-RC0"
+
+    // Material Dialogs
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
+
+    // TODO: check how to remove libraries that are not required for release
+    // Logger
+    compile 'com.jakewharton.timber:timber:4.5.1'
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '26.0.0-alpha1'
+                }
+            }
+        }
+    }
+}
