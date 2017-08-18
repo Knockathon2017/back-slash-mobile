@@ -7,8 +7,17 @@
         jumboMode="true"
         optimize="true"
         revision="26.0.0"
-        sha1="970ad8814188adde8203ed142bbffe6bdffe16b3">
+        sha1="62d389b661b6b713579735e1fe9de348142966c7">
         <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_06d36f1b1bbb620bd5d0ef4ecbaa8f9765f231c6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/anurags/.android/build-cache/7a500ba08e5a2cd6d0bf882ee1087591e4284ebd/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="870ce856ec2f776985b61dbbf0df0db9fe6df78b">
+        <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_092d3c8f2e916655cdd4bfde1e146559f5afc14b/classes.dex" />
     </item>
     <item
         is-multidex="true"

@@ -85,6 +85,9 @@ dependencies {
     // Logger
     compile 'com.jakewharton.timber:timber:4.5.1'
 
+    // EasyPermissions
+    compile 'pub.devrel:easypermissions:0.4.0'
+
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested

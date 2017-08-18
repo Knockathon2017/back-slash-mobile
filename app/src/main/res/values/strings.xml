@@ -5,4 +5,7 @@
   <string name="title_home">Text</string>
   <string name="title_dashboard">Camera</string>
   <string name="title_notifications">Barcode</string>
+  <string name="rationale_camera_permission">To take photos grant the permission.</string>
+  <string name="dir_camera">camera</string>
+  <string name="provider">.provider</string>
 </resources>
