@@ -15,6 +15,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java" />
     </list>
     <ignored path="back-slash-mobile.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,11 +49,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="DetailActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/detail/DetailActivity.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="264" column="24" selection-start-line="259" selection-start-column="8" selection-end-line="264" selection-end-column="24" />
+            <state relative-caret-position="260">
+              <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -60,51 +61,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DecoderActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/qrcode/DecoderActivity.java">
+      <file leaf-file-name="GrievanceFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/grievance/GrievanceFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="658">
-              <caret line="200" column="41" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
+            <state relative-caret-position="364">
+              <caret line="121" column="4" selection-start-line="121" selection-start-column="4" selection-end-line="127" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gradle.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.gradle/gradle.properties">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="410">
+              <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gradle-wrapper.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <file leaf-file-name="CategorizedFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/categorized/CategorizedFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="327">
+              <caret line="166" column="71" selection-start-line="166" selection-start-column="71" selection-end-line="166" selection-end-column="71" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="proguard-rules.pro" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
+      <file leaf-file-name="UncategorizedFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/uncategorized/UncategorizedFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gradle.properties" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gradle.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="38" />
+            <state relative-caret-position="159">
+              <caret line="173" column="73" selection-start-line="173" selection-start-column="73" selection-end-line="173" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -1901,7 +1892,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4509217274915" />
+        <entry key="$PROJECT_DIR$" value="4509226509418" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2281,8 +2272,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/data/remote/uploadtext/UploadTextRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/detail/DetailModel.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_decoder.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/data/remote/APIClickTagitClient.java" />
@@ -2291,12 +2280,14 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_grievance_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_categorized_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_uncategorized_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/grievance/GrievanceFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/uncategorized/UncategorizedFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/categorized/CategorizedFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/detail/DetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/qrcode/DecoderActivity.java" />
         <option value="$PROJECT_DIR$/gradle.properties" />
+        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/grievance/GrievanceFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/uncategorized/UncategorizedFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/categorized/CategorizedFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -2355,6 +2346,28 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="back-slash-mobile" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="click" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tagit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -2364,7 +2377,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="device.picker.selection" value="00d66682968b2a8a" />
-    <property name="SearchEverywhereHistoryKey" value="LoginAc&#9;ACTION&#9;template.create.ActivityLogin Activity&#10;detail&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/detail/DetailActivity.java&#10;android&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/AndroidManifest.xml&#10;gradle&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build.gradle&#10;strin&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/res/values/strings.xml&#10;grad&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build.gradle&#10;deta&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/detail/DetailActivity.java&#10;main&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/res/layout/activity_main.xml&#10;pro&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/gradle.properties&#10;api&#9;PSI&#9;JAVA://click.tagit.data.remote.APIClickTagitClient&#10;prop&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/gradle.properties&#10;applica&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/ClickTagitApplication.java&#10;dimens&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/res/values/dimens.xml" />
+    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/MainActivity.java&#10;build&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build.gradle&#10;LoginAc&#9;ACTION&#9;template.create.ActivityLogin Activity&#10;detail&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/detail/DetailActivity.java&#10;android&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/AndroidManifest.xml&#10;gradle&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build.gradle&#10;strin&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/res/values/strings.xml&#10;grad&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build.gradle&#10;deta&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/detail/DetailActivity.java&#10;pro&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/gradle.properties&#10;api&#9;PSI&#9;JAVA://click.tagit.data.remote.APIClickTagitClient&#10;prop&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/gradle.properties&#10;applica&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/java/click/tagit/ClickTagitApplication.java&#10;dimens&#9;FILE&#9;file:///home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/src/main/res/values/dimens.xml" />
     <property name="DEBUGGABLE_DEVICE" value="lge-nexus_5x-00d66682968b2a8a" />
     <property name="DEBUGGABLE_PROCESS" value="click.tagit" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -3059,16 +3072,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="69" column="33" selection-start-line="69" selection-start-column="33" selection-end-line="69" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="598">
@@ -3084,14 +3087,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
           <caret line="10" column="19" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="116" column="66" selection-start-line="116" selection-start-column="66" selection-end-line="116" selection-end-column="66" />
           <folding />
         </state>
       </provider>
@@ -3202,30 +3197,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/grievance/GrievanceFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="113" column="4" selection-start-line="113" selection-start-column="4" selection-end-line="119" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/uncategorized/UncategorizedFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/categorized/CategorizedFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="105" column="4" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3234,16 +3205,6 @@
         <state relative-caret-position="728">
           <caret line="89" column="38" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/detail/DetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="264" column="24" selection-start-line="259" selection-start-column="8" selection-end-line="264" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3281,8 +3242,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gradle.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="38" />
+        <state relative-caret-position="520">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/detail/DetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="234" column="71" selection-start-line="234" selection-start-column="71" selection-end-line="234" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/grievance/GrievanceFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="121" column="4" selection-start-line="121" selection-start-column="4" selection-end-line="127" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/uncategorized/UncategorizedFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="173" column="73" selection-start-line="173" selection-start-column="73" selection-end-line="173" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/categorized/CategorizedFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="166" column="71" selection-start-line="166" selection-start-column="71" selection-end-line="166" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/click/tagit/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import click.tagit.R;
+import click.tagit.custom.view.DividerItemDecoration;
 import click.tagit.data.remote.ClickTagitRESTClientSingleton;
 import click.tagit.data.remote.grievance.Data;
 import click.tagit.data.remote.grievance.FileInfoResponse;
@@ -145,6 +146,12 @@ public class UncategorizedFragment extends Fragment {
 
                                 if (fileInfoResponse != null & fileInfoResponse.getStatus() == 200
                                         & fileInfoResponse.getData() != null) {
+                                    RecyclerView.ItemDecoration itemDecoration = new
+                                            DividerItemDecoration(getActivity(),
+                                            DividerItemDecoration
+                                                    .VERTICAL_LIST);
+                                    mRecyclerView
+                                            .addItemDecoration(itemDecoration);
                                     mRecyclerView.setLayoutManager(
                                             new LinearLayoutManager(getActivity()));
                                     mRecyclerView
