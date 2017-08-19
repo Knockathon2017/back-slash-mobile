@@ -38,5 +38,12 @@
       android:layout_margin="@dimen/text_margin"
       android:text="@{data.category}"
       android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/text_margin"
+      android:text="@{data.status}"
+      android:textAppearance="?attr/textAppearanceListItem" />
   </LinearLayout>
 </layout>
