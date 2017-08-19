@@ -17,6 +17,8 @@ import click.tagit.R;
 import click.tagit.data.remote.ClickTagitRESTClientSingleton;
 import click.tagit.data.remote.uploadfile.UploadFileResponse;
 import click.tagit.data.remote.uploadtext.UploadTextQrcodeRequest;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView.OnQRCodeReadListener;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,7 +42,7 @@ public class DecoderActivity extends AppCompatActivity
     private CheckBox enableDecodingCheckBox;
     private PointsOverlayView pointsOverlayView;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-
+    private MaterialDialog mMaterialDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +155,12 @@ public class DecoderActivity extends AppCompatActivity
     // "points" : points where QR control points are placed
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
+        mMaterialDialog = new Builder(this)
+                .title("In progress")
+                .content("Please wait...")
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
         resultTextView.setText(text);
         pointsOverlayView.setPoints(points);
         qrCodeReaderView.setQRDecodingEnabled(false);
@@ -169,12 +177,14 @@ public class DecoderActivity extends AppCompatActivity
                             public void onNext(@NonNull UploadFileResponse uploadFileResponse) {
                                 Timber.d("onNext() called with: uploadFileResponse = ["
                                         + uploadFileResponse + "]");
+                                mMaterialDialog.dismiss();
+                                finish();
                             }
 
                             @Override
                             public void onError(@NonNull Throwable throwable) {
                                 Timber.e(throwable, "onError() called: error");
-
+                                mMaterialDialog.dismiss();
                                 // TODO: need error handling
                                 if (throwable instanceof HttpException) {
                                     // We had non-2XX http error
@@ -187,6 +197,8 @@ public class DecoderActivity extends AppCompatActivity
                             @Override
                             public void onComplete() {
                                 Timber.d("onComplete() called");
+                                mMaterialDialog.dismiss();
+                                finish();
                             }
                         }));
     }

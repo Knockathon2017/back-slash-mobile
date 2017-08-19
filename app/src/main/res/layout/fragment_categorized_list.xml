@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/swiperefresh"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="click.tagit.categorized.CategorizedFragment">
+
+<android.support.v7.widget.RecyclerView
   android:id="@+id/list"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -9,5 +15,5 @@
   android:layout_marginRight="16dp"
   android:name="click.tagit.categorized.CategorizedFragment"
   app:layoutManager="LinearLayoutManager"
-  tools:context="click.tagit.categorized.CategorizedFragment"
   tools:listitem="@layout/fragment_categorized" />
+  </android.support.v4.widget.SwipeRefreshLayout>

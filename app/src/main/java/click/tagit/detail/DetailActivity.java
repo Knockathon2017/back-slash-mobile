@@ -3,6 +3,7 @@ package click.tagit.detail;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.location.Address;
@@ -54,6 +55,8 @@ import timber.log.Timber;
 public class DetailActivity extends AppCompatActivity implements OnDateSetListener,
         EasyPermissions.PermissionCallbacks {
 
+    private ProgressDialog mProgressDialog;
+
     private static final int RC_LOCATION_FINE_AND_COARSE_PERM = 124;
     public static boolean mIsGreviance = false;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
@@ -67,6 +70,7 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
     private DetailModel mDetailModel;
     private RxLocation rxLocation;
     private LocationRequest locationRequest;
+    private MaterialDialog mMaterialDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,6 +257,13 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
     void postData() {
         Timber.d("postData() called");
 
+        mMaterialDialog = new Builder(this)
+                .title("In progress")
+                .content("Please wait...")
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
+
         mDetailModel.time = DateTime.now().getMillis();
         if (!mIsGreviance) {
             mDetailModel.category = "grievances";
@@ -298,12 +309,16 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                             public void onNext(@NonNull UploadFileResponse uploadFileResponse) {
                                 Timber.d("onNext() called with: uploadFileResponse = ["
                                         + uploadFileResponse + "]");
+
+                                mMaterialDialog.dismiss();
+                                finish();
                             }
 
                             @Override
                             public void onError(@NonNull Throwable throwable) {
                                 Timber.e(throwable, "onError() called: error");
 
+                                mMaterialDialog.dismiss();
                                 // TODO: need error handling
                                 if (throwable instanceof HttpException) {
                                     // We had non-2XX http error
@@ -316,6 +331,8 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                             @Override
                             public void onComplete() {
                                 Timber.d("onComplete() called");
+                                mMaterialDialog.dismiss();
+                                finish();
                             }
                         }));
     }
@@ -347,12 +364,15 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                             public void onNext(@NonNull UploadFileResponse uploadFileResponse) {
                                 Timber.d("onNext() called with: uploadFileResponse = ["
                                         + uploadFileResponse + "]");
+                                mMaterialDialog.dismiss();
+                                finish();
                             }
 
                             @Override
                             public void onError(@NonNull Throwable throwable) {
                                 Timber.e(throwable, "onError() called: error");
 
+                                mMaterialDialog.dismiss();
                                 // TODO: need error handling
                                 if (throwable instanceof HttpException) {
                                     // We had non-2XX http error
@@ -365,6 +385,8 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                             @Override
                             public void onComplete() {
                                 Timber.d("onComplete() called");
+                                mMaterialDialog.dismiss();
+                                finish();
                             }
                         }));
     }

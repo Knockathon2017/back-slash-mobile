@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class UncategorizedFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListUncategorizedFragmentInteractionListener mListener;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -61,6 +63,14 @@ public class UncategorizedFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         Timber.d("setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "]");
         mIsGreviance = true;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (null != mSwipeRefreshLayout) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
@@ -88,10 +98,8 @@ public class UncategorizedFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_uncategorized_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            mRecyclerView = (RecyclerView) view;
-        }
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         return view;
     }
 
@@ -101,6 +109,19 @@ public class UncategorizedFragment extends Fragment {
         Timber.d("onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
                 + savedInstanceState + "]");
 
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+        });
+        refreshItems();
+    }
+
+    private void refreshItems() {
+        Timber.d("refreshItems() called");
         mCompositeDisposable.add(ClickTagitRESTClientSingleton.INSTANCE
                 .getRESTClient()
                 .getFileInfo("uncategorized")
@@ -142,7 +163,6 @@ public class UncategorizedFragment extends Fragment {
                                 Timber.d("onComplete() called");
                             }
                         }));
-
     }
 
     @Override
