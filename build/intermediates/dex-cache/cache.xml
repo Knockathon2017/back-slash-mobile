@@ -25,7 +25,7 @@
         jumboMode="true"
         optimize="true"
         revision="26.0.1"
-        sha1="17bc742fe24f47aa5744b4b46268e28863fe68d3">
+        sha1="808c7f9e6bae50ef77a721f2d48aa4e14e7af779">
         <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_06d36f1b1bbb620bd5d0ef4ecbaa8f9765f231c6/classes.dex" />
     </item>
     <item
@@ -174,12 +174,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/anurags/.android/build-cache/929c2504e327ef87070317312b170fe24727ceb4/output/jars/classes.jar"
+        jar="/home/anurags/.android/build-cache/9d31b75d6cd1120b8b2be5cd571fab8d3a919c52/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.1"
-        sha1="2df69841cd9793d6bfa2f78b7b7f4ea06d2296a7">
-        <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_77846d0e8263173c29a2933fcdc1ea1875967382/classes.dex" />
+        sha1="9cf58659176cbff3b01e886fbee87622d49951bf">
+        <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e16ca89291fc23c37cbb43368a6fc0caeb959ef3/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -435,6 +435,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/home/anurags/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.2.1/2287494d4f5f9f3a9a2bb6980e3f32053721b315/core-3.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
+        <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/core-3.2.1_66d9ca8bf37a8bc15093decc3f4ef25a8419b08e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/home/anurags/.android/build-cache/22614862683e05250e696bffeb3cd79955a69c52/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -459,15 +468,6 @@
         revision="26.0.1"
         sha1="3ee0e527143abbe130ddba4c1fa6c4be5d66ed5c">
         <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/adapter-rxjava2-2.2.0_362fa5048edd9e2f3c364a359b8f3c8303405140/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/anurags/.android/build-cache/fcd07e14a5155257fcdbb0db5276e55f89b0c148/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.1"
-        sha1="816a71eb5b0340d26db3056aa33f58dad108315b">
-        <dex dex="/home/anurags/disk2/workspace/android-studio-office/back-slash-mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_067371aa2e0efbc68057f7fedd0c773237f0abc4/classes.dex" />
     </item>
     <item
         is-multidex="true"

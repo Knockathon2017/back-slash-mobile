@@ -21,9 +21,8 @@ import click.tagit.categorized.CategorizedFragment.OnListCategorizeFragmentInter
 import click.tagit.data.remote.grievance.Data;
 import click.tagit.detail.DetailActivity_;
 import click.tagit.grievance.GrievanceFragment.OnListGrievanceFragmentInteractionListener;
+import click.tagit.qrcode.DecoderActivity;
 import click.tagit.uncategorized.UncategorizedFragment.OnListUncategorizedFragmentInteractionListener;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements
                     return true;
                 case R.id.navigation_notifications:
                     if (!mIsGreviance) {
+                        startActivity(new Intent(MainActivity.this, DecoderActivity.class));
                         return true;
                     }
                     return false;

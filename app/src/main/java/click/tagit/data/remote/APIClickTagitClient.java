@@ -2,6 +2,7 @@ package click.tagit.data.remote;
 
 import click.tagit.data.remote.grievance.FileInfoResponse;
 import click.tagit.data.remote.uploadfile.UploadFileResponse;
+import click.tagit.data.remote.uploadtext.UploadTextQrcodeRequest;
 import click.tagit.data.remote.uploadtext.UploadTextRequest;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -40,4 +41,7 @@ public interface APIClickTagitClient {
 
     @GET("getFileInfo")
     Observable<FileInfoResponse> getFileInfo(@Query("category") String category);
+
+    @POST("gText")
+    Observable<UploadFileResponse> postGText(@Body UploadTextQrcodeRequest uploadTextQrcodeRequest);
 }
