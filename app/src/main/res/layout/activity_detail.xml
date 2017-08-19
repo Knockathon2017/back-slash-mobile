@@ -76,12 +76,14 @@
         android:hint="description" />
 
       <TextView
+        android:visibility="@{isEnabled ? View.VISIBLE : View.GONE}"
         android:id="@+id/text_view_alarm"
         android:layout_marginTop="@dimen/view_spacing_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
       <Button
+        android:visibility="@{isEnabled ? View.VISIBLE : View.GONE}"
         android:id="@+id/button_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
