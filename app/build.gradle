@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "click.tagit"
         minSdkVersion 22
@@ -36,6 +37,14 @@ android {
             buildConfigField("String", "URL_BASE", project.production)
         }
     }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_6
 }
 
 dependencies {
@@ -104,6 +113,8 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.9'
 
     compile 'com.google.android.gms:play-services-vision:11.2.0'
+    compile 'com.patloew.rxlocation:rxlocation:1.0.3'
+    compile 'com.google.android.gms:play-services-location:11.2.0'
 
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->

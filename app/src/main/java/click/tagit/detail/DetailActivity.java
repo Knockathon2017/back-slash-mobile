@@ -2,12 +2,17 @@ package click.tagit.detail;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
+import android.Manifest;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.location.Address;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import click.tagit.R;
 import click.tagit.custom.glide.GlideApp;
@@ -18,8 +23,11 @@ import click.tagit.databinding.ActivityDetailBinding;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice;
+import com.google.android.gms.location.LocationRequest;
+import com.patloew.rxlocation.RxLocation;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -27,6 +35,8 @@ import io.reactivex.schedulers.Schedulers;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -34,12 +44,17 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.joda.time.DateTime;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.HttpException;
 import timber.log.Timber;
 
 @EActivity
-public class DetailActivity extends AppCompatActivity implements OnDateSetListener {
+public class DetailActivity extends AppCompatActivity implements OnDateSetListener,
+        EasyPermissions.PermissionCallbacks {
 
+    private static final int RC_LOCATION_FINE_AND_COARSE_PERM = 124;
     public static boolean mIsGreviance = false;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     ActivityDetailBinding mActivityDetailBinding;
@@ -50,6 +65,8 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
     @Extra
     boolean mIsText;
     private DetailModel mDetailModel;
+    private RxLocation rxLocation;
+    private LocationRequest locationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +90,10 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                 .into(mActivityDetailBinding.imageView);
         mActivityDetailBinding.setDetailModel(mDetailModel);
         mActivityDetailBinding.setIsEnabled(mIsGreviance);
+        rxLocation = new RxLocation(this);
+        rxLocation.setDefaultTimeout(15, TimeUnit.SECONDS);
+        locationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
@@ -83,6 +104,155 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
 
     @Click(R.id.button_submit)
     void submitButtonWasClicked() {
+        Timber.d("submitButtonWasClicked() called");
+
+        checkLocationPermission();
+    }
+
+    @AfterPermissionGranted(RC_LOCATION_FINE_AND_COARSE_PERM)
+    public void checkLocationPermission() {
+        Timber.d("checkLocationPermission() called");
+
+        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            // Have permissions, do the thing!
+            startLocationRefresh();
+        } else {
+            // Ask for both permissions
+            EasyPermissions
+                    .requestPermissions(this, getString(R.string.rationale_location_permission),
+                            RC_LOCATION_FINE_AND_COARSE_PERM, perms);
+        }
+    }
+
+    public void startLocationRefresh() {
+        mCompositeDisposable.add(
+                rxLocation.settings().checkAndHandleResolution(locationRequest)
+                        .flatMapObservable(this::getAddressObservable)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onAddressUpdate, throwable -> Log
+                                .e("MainPresenter", "Error fetching location/address updates",
+                                        throwable))
+        );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Timber.d("onActivityResult() called with: requestCode = [" + requestCode
+                + "], resultCode = [" + resultCode + "], data = [" + data + "]");
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            // Do something after user returned from app settings screen, like showing a Toast.
+            checkLocationPermission();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Timber.d("onRequestPermissionsResult() called with: requestCode = [" + requestCode
+                + "], permissions = [" + permissions + "], grantResults = [" + grantResults + "]");
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults,
+                DetailActivity.this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Timber.d("onPermissionsGranted() called with: requestCode = ["
+                + requestCode + "], perms = [" + perms + "]");
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Timber.d("onPermissionsDenied() called with: requestCode = [" + requestCode + "], perms = ["
+                + perms + "]");
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        // TODO: correct the below behaviour even when
+        if (EasyPermissions.somePermissionPermanentlyDenied(DetailActivity.this, perms)) {
+            new AppSettingsDialog.Builder(DetailActivity.this).build().show();
+        } else {
+            checkLocationPermission();
+        }
+    }
+
+    @Click(R.id.button_predefined_category)
+    void buttonPredifinedCategoryWasClicked() {
+        Timber.d("buttonPredifinedCategoryWasClicked() called");
+
+        new Builder(this)
+                .title("Choose your category")
+                .items(R.array.categories)
+                .itemsCallbackSingleChoice(-1, new ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which,
+                            CharSequence text) {
+                        Timber.d("onSelection() called with: dialog = [" + dialog + "], itemView "
+                                + "= [" + itemView + "], which = [" + which + "], text = [" + text
+                                + "]");
+                        mDetailModel.predefinedCategory = (String) text;
+                        mActivityDetailBinding.textViewPredefinedCategory.setText(text);
+                        return true;
+                    }
+                })
+                .positiveText("Choose")
+                .show();
+    }
+
+    @Click(R.id.button_alarm)
+    void buttonAlarmWasClicked() {
+        Timber.d("button_alarm() called");
+
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                DetailActivity.this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        Timber.d("onDateSet() called with: view = [" + view + "], year = [" + year
+                + "], monthOfYear = [" + monthOfYear + "], dayOfMonth = [" + dayOfMonth + "]");
+
+        mDetailModel.alarm = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+        mActivityDetailBinding.textViewAlarm.setText(mDetailModel.alarm);
+    }
+
+    private Observable<Address> getAddressObservable(boolean success) {
+        if (success) {
+            return rxLocation.location().updates(locationRequest)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext(this::onLocationUpdate)
+                    .flatMap(this::getAddressFromLocation);
+
+        } else {
+            onLocationSettingsUnsuccessful();
+
+            return rxLocation.location().lastLocation()
+                    .doOnSuccess(this::onLocationUpdate)
+                    .flatMapObservable(this::getAddressFromLocation);
+        }
+    }
+
+    void onLocationSettingsUnsuccessful() {
+        Timber.d("onLocationSettingsUnsuccessful() called");
+        postData();
+    }
+
+    void postData() {
+        Timber.d("postData() called");
+
         mDetailModel.time = DateTime.now().getMillis();
         if (!mIsGreviance) {
             mDetailModel.category = "grievances";
@@ -109,7 +279,12 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                 , mDetailModel.description
                 , mDetailModel.alarm
                 , mDetailModel.time
-                , mDetailModel.category);
+                , mDetailModel.category
+                , mDetailModel.latitude
+                , mDetailModel.longitude
+                , mDetailModel.postalCode
+                , mDetailModel.locality
+                , mDetailModel.address);
 
         mCompositeDisposable.add(ClickTagitRESTClientSingleton.INSTANCE
                 .getRESTClient()
@@ -157,6 +332,11 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                         , createPartFromString(mDetailModel.alarm)
                         , createPartFromString(String.valueOf(mDetailModel.time))
                         , createPartFromString(mDetailModel.category)
+                        , createPartFromString(String.valueOf(mDetailModel.latitude))
+                        , createPartFromString(String.valueOf(mDetailModel.longitude))
+                        ,createPartFromString(mDetailModel.postalCode)
+                        ,createPartFromString(mDetailModel.locality)
+                        ,createPartFromString(mDetailModel.address)
                         , body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -220,49 +400,40 @@ public class DetailActivity extends AppCompatActivity implements OnDateSetListen
                 okhttp3.MultipartBody.FORM, descriptionString);
     }
 
-    @Click(R.id.button_predefined_category)
-    void buttonPredifinedCategoryWasClicked() {
-        Timber.d("buttonPredifinedCategoryWasClicked() called");
-
-        new Builder(this)
-                .title("Choose your category")
-                .items(R.array.categories)
-                .itemsCallbackSingleChoice(-1, new ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which,
-                            CharSequence text) {
-                        Timber.d("onSelection() called with: dialog = [" + dialog + "], itemView "
-                                + "= [" + itemView + "], which = [" + which + "], text = [" + text
-                                + "]");
-                        mDetailModel.predefinedCategory = (String) text;
-                        mActivityDetailBinding.textViewPredefinedCategory.setText(text);
-                        return true;
-                    }
-                })
-                .positiveText("Choose")
-                .show();
+    private Observable<Address> getAddressFromLocation(Location location) {
+        return rxLocation.geocoding().fromLocation(location).toObservable()
+                .subscribeOn(Schedulers.io());
     }
 
-    @Click(R.id.button_alarm)
-    void buttonAlarmWasClicked() {
-        Timber.d("button_alarm() called");
+    void onAddressUpdate(Address address) {
+        Timber.d("onAddressUpdate() called with: address = [" + address + "]");
 
-        Calendar now = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
-                DetailActivity.this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show(getFragmentManager(), "Datepickerdialog");
+        mDetailModel.latitude = String.valueOf(address.getLatitude());
+        mDetailModel.longitude = String.valueOf(address.getLongitude());
+        mDetailModel.postalCode = address.getPostalCode();
+        mDetailModel.locality = address.getLocality();
+        mDetailModel.address = getAddressText(address);
+        postData();
     }
 
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        Timber.d("onDateSet() called with: view = [" + view + "], year = [" + year
-                + "], monthOfYear = [" + monthOfYear + "], dayOfMonth = [" + dayOfMonth + "]");
+    private String getAddressText(Address address) {
+        Timber.d("getAddressText() called with: address = [" + address + "]");
 
-        mDetailModel.alarm = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-        mActivityDetailBinding.textViewAlarm.setText(mDetailModel.alarm);
+        String addressText = "";
+        final int maxAddressLineIndex = address.getMaxAddressLineIndex();
+
+        for (int i = 0; i <= maxAddressLineIndex; i++) {
+            addressText += address.getAddressLine(i);
+            if (i != maxAddressLineIndex) {
+                addressText += " ";
+            }
+        }
+
+        Timber.d("getAddressText() called: addressText = [" + addressText + "]");
+        return addressText;
+    }
+
+    void onLocationUpdate(Location location) {
+        Timber.d("onLocationUpdate() called with: location = [" + location + "]");
     }
 }

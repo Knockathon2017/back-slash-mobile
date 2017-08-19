@@ -13,4 +13,9 @@ public class DetailModel {
     public long time;
     public String category;
     public String predefinedCategory;
+    public String latitude;
+    public String longitude;
+    public String postalCode;
+    public String locality;
+    public String address;
 }

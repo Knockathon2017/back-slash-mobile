@@ -28,6 +28,11 @@ public interface APIClickTagitClient {
             , @Part("alarm") RequestBody alarm
             , @Part("time") RequestBody time
             , @Part("category") RequestBody category
+            , @Part("latitude") RequestBody latitude
+            , @Part("longitude") RequestBody longitude
+            , @Part("postalCode") RequestBody postalCode
+            , @Part("locality") RequestBody locality
+            , @Part("address") RequestBody address
             , @Part MultipartBody.Part file);
 
     @POST("gText")

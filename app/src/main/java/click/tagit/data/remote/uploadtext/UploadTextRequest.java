@@ -21,12 +21,34 @@ public class UploadTextRequest {
     @Expose
     @SerializedName("category")
     private String category;
+    @Expose
+    @SerializedName("latitude")
+    private String latitude;
+    @Expose
+    @SerializedName("longitude")
+    private String longitude;
+    @Expose
+    @SerializedName("postalCode")
+    private String postalCode;
+    @Expose
+    @SerializedName("locality")
+    private String locality;
+    @Expose
+    @SerializedName("address")
+    private String address;
     public UploadTextRequest(String tags, String description, String alarm, long time,
-            String category) {
+            String category, String latitude, String longitude, String postalCode,
+            String locality, String address) {
         this.tags = tags;
         this.description = description;
         this.alarm = alarm;
         this.time = time;
         this.category = category;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.postalCode = postalCode;
+        this.locality = locality;
+        this.address = address;
     }
+
 }

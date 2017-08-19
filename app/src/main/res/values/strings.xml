@@ -8,4 +8,6 @@
   <string name="rationale_camera_permission">To take photos grant the permission.</string>
   <string name="dir_camera">camera</string>
   <string name="provider">.provider</string>
+  <string name="rationale_location_permission">To use the application and share the
+    location, you must enable the location permission.</string>
 </resources>
