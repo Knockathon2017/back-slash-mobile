@@ -103,6 +103,8 @@ dependencies {
     // This library is a version of Joda-Time built with Android in mind.
     compile 'net.danlew:android.joda:2.9.9'
 
+    compile 'com.google.android.gms:play-services-vision:11.2.0'
+
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +16,6 @@ import click.tagit.R;
 import click.tagit.data.remote.ClickTagitRESTClientSingleton;
 import click.tagit.data.remote.grievance.Data;
 import click.tagit.data.remote.grievance.FileInfoResponse;
-import click.tagit.grievance.dummy.DummyContent;
-import click.tagit.grievance.dummy.DummyContent.DummyItem;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -35,14 +32,13 @@ import timber.log.Timber;
  */
 public class GrievanceFragment extends Fragment {
 
-    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    RecyclerView mRecyclerView;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListGrievanceFragmentInteractionListener mListener;
-    RecyclerView mRecyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +55,12 @@ public class GrievanceFragment extends Fragment {
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Timber.d("setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "]");
+        mIsGreviance = false;
     }
 
     @Override
@@ -112,11 +114,13 @@ public class GrievanceFragment extends Fragment {
                                 Timber.d("onNext() called with: fileInfoResponse = ["
                                         + fileInfoResponse + "]");
 
-                                if(fileInfoResponse != null & fileInfoResponse.getStatus() == 200
-                                        & fileInfoResponse.getData() != null){
-                                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                if (fileInfoResponse != null & fileInfoResponse.getStatus() == 200
+                                        & fileInfoResponse.getData() != null) {
+                                    mRecyclerView.setLayoutManager(
+                                            new LinearLayoutManager(getActivity()));
                                     mRecyclerView
-                                            .setAdapter(new MyGrievanceRecyclerViewAdapter(fileInfoResponse.getData(), mListener));
+                                            .setAdapter(new MyGrievanceRecyclerViewAdapter(
+                                                    fileInfoResponse.getData(), mListener));
                                 }
                             }
 
@@ -142,6 +146,12 @@ public class GrievanceFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        mCompositeDisposable.clear();
+        super.onDestroy();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -160,18 +170,6 @@ public class GrievanceFragment extends Fragment {
     public interface OnListGrievanceFragmentInteractionListener {
 
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Data data);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        Timber.d("setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "]");
-        mIsGreviance = false;
-    }
-
-    @Override
-    public void onDestroy() {
-        mCompositeDisposable.clear();
-        super.onDestroy();
+        void onListGrievanceFragmentInteraction(Data data);
     }
 }

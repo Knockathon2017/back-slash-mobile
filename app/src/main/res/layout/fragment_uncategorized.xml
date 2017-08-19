@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
 
-  <TextView
-    android:id="@+id/id"
+  <data>
+    <import type="android.text.TextUtils" />
+    <import type="android.view.View" />
+    <variable
+      name="dataListListenerUnCategorized"
+      type="click.tagit.uncategorized.UncategorizedFragment.OnListUncategorizedFragmentInteractionListener" />
+    <variable
+      name="dataUnCategorized"
+      type="click.tagit.data.remote.grievance.Data" />
+  </data>
+
+  <LinearLayout
+    android:onClick="@{() -> dataListListenerUnCategorized.onListUncategorizedFragmentInteraction(dataUnCategorized)}"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/text_margin"
-    android:textAppearance="?attr/textAppearanceListItem" />
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
-  <TextView
-    android:id="@+id/content"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/text_margin"
-    android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+    <ImageView
+      android:id="@+id/image_view_thumbnail"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_margin="@dimen/text_margin"
+      android:src="@drawable/ic_add_a_photo_black_24px"
+      android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+      android:id="@+id/text_view_location"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="tags"
+      android:layout_margin="@dimen/text_margin"
+      android:text="@{dataUnCategorized.category}"
+      android:textAppearance="?attr/textAppearanceListItem" />
+  </LinearLayout>
+</layout>

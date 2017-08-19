@@ -5,28 +5,17 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import click.tagit.R;
 import click.tagit.custom.glide.GlideApp;
 import click.tagit.data.remote.grievance.Data;
 import click.tagit.databinding.FragmentGrievanceBinding;
-import click.tagit.detail.DetailActivity;
 import click.tagit.grievance.GrievanceFragment.OnListGrievanceFragmentInteractionListener;
-import click.tagit.grievance.dummy.DummyContent.DummyItem;
-
 import com.android.databinding.library.baseAdapters.BR;
 import java.util.List;
 import timber.log.Timber;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListGrievanceFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyGrievanceRecyclerViewAdapter extends
         RecyclerView.Adapter<MyGrievanceRecyclerViewAdapter.ViewHolder> {
 
@@ -54,15 +43,17 @@ public class MyGrievanceRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Timber.d("onBindViewHolder() called with: holder = "
                 + "[" + holder + "], position = [" + position
-                        + "]");
+                + "]");
         final Data data = mDataList.get(position);
         if (null != data) {
             holder.bind(data);
             GlideApp.with(holder.binding.getRoot().getContext())
                     .load(data.getThumbnail())
                     .fallback(R.drawable.ic_add_a_photo_black_24px)
+                    .error(R.drawable.ic_add_a_photo_black_24px)
                     .transition(withCrossFade())
-                    .into((ImageView) holder.binding.getRoot().findViewById(R.id.image_view_thumbnail));
+                    .into((ImageView) holder.binding.getRoot()
+                            .findViewById(R.id.image_view_thumbnail));
         }
     }
 

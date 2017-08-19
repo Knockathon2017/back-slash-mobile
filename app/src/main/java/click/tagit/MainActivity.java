@@ -18,13 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import click.tagit.categorized.CategorizedFragment.OnListCategorizeFragmentInteractionListener;
-import click.tagit.categorized.dummy.DummyContent.DummyItem;
 import click.tagit.data.remote.grievance.Data;
-import click.tagit.detail.DetailActivity;
 import click.tagit.detail.DetailActivity_;
 import click.tagit.grievance.GrievanceFragment.OnListGrievanceFragmentInteractionListener;
-import click.tagit.grievance.dummy.DummyContent;
 import click.tagit.uncategorized.UncategorizedFragment.OnListUncategorizedFragmentInteractionListener;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -39,11 +38,10 @@ public class MainActivity extends AppCompatActivity implements
         OnListCategorizeFragmentInteractionListener, OnListGrievanceFragmentInteractionListener,
         OnListUncategorizedFragmentInteractionListener, EasyPermissions.PermissionCallbacks {
 
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     private static final int RC_CAMERA_PERM = 126;
     private Uri mTempImageURI;
     private String mTempImagePath;
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if(!mIsGreviance){
+                    if (!mIsGreviance) {
                         DetailActivity_.intent(MainActivity.this).mIsText(true).start();
                         return true;
                     }
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements
                     checkCameraPermission();
                     return true;
                 case R.id.navigation_notifications:
-                    if(!mIsGreviance){
+                    if (!mIsGreviance) {
                         return true;
                     }
                     return false;
@@ -133,19 +131,19 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onListFragmentInteraction(DummyItem item) {
+    public void onListCategorizeFragmentInteraction(Data data) {
+        Timber.d("onListCategorizeFragmentInteraction() called with: data = [" + data + "]");
+    }
+
+    @Override
+    public void onListGrievanceFragmentInteraction(Data data) {
+        Timber.d("onListCategorizeFragmentInteraction() called with: data = [" + data + "]");
 
     }
 
     @Override
-    public void onListFragmentInteraction(Data data) {
-        Timber.d("onListFragmentInteraction() called with: data = [" + data + "]");
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(
-            click.tagit.uncategorized.dummy.DummyContent.DummyItem item) {
+    public void onListUncategorizedFragmentInteraction(Data data) {
+        Timber.d("onListCategorizeFragmentInteraction() called with: data = [" + data + "]");
 
     }
 

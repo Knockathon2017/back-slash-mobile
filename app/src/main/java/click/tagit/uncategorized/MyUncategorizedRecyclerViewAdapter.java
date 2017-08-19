@@ -1,81 +1,81 @@
 package click.tagit.uncategorized;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+import android.widget.ImageView;
 import click.tagit.R;
+import click.tagit.custom.glide.GlideApp;
+import click.tagit.data.remote.grievance.Data;
+import click.tagit.databinding.FragmentUncategorizedBinding;
 import click.tagit.uncategorized.UncategorizedFragment.OnListUncategorizedFragmentInteractionListener;
-import click.tagit.uncategorized.dummy.DummyContent.DummyItem;
-
+import com.android.databinding.library.baseAdapters.BR;
 import java.util.List;
+import timber.log.Timber;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListUncategorizedFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyUncategorizedRecyclerViewAdapter extends
         RecyclerView.Adapter<MyUncategorizedRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Data> mDataList;
     private final OnListUncategorizedFragmentInteractionListener mListener;
 
-    public MyUncategorizedRecyclerViewAdapter(List<DummyItem> items,
+    public MyUncategorizedRecyclerViewAdapter(List<Data> dataList,
             OnListUncategorizedFragmentInteractionListener listener) {
-        mValues = items;
+        mDataList = dataList;
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_uncategorized, parent, false);
-        return new ViewHolder(view);
+        Timber.d("onCreateViewHolder() called with: parent = [" + parent + "], viewType = ["
+                + viewType + "]");
+        LayoutInflater layoutInflater =
+                LayoutInflater.from(parent.getContext());
+        FragmentUncategorizedBinding itemBinding =
+                FragmentUncategorizedBinding.inflate(layoutInflater, parent, false);
+        return new ViewHolder(itemBinding);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+    public void onBindViewHolder(final MyUncategorizedRecyclerViewAdapter.ViewHolder holder,
+            int position) {
+        Timber.d("onBindViewHolder() called with: holder = "
+                + "[" + holder + "], position = [" + position
+                + "]");
+        final Data data = mDataList.get(position);
+        if (null != data) {
+            holder.bind(data);
+            GlideApp.with(holder.binding.getRoot().getContext())
+                    .load(data.getThumbnail())
+                    .fallback(R.drawable.ic_add_a_photo_black_24px)
+                    .error(R.drawable.ic_add_a_photo_black_24px)
+                    .transition(withCrossFade())
+                    .into((ImageView) holder.binding.getRoot()
+                            .findViewById(R.id.image_view_thumbnail));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mDataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        private final ViewDataBinding binding;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+        public ViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+        public void bind(Object obj) {
+            binding.setVariable(BR.dataUnCategorized, obj);
+            binding.setVariable(BR.dataListListenerUnCategorized, mListener);
+            binding.executePendingBindings();
         }
     }
 }

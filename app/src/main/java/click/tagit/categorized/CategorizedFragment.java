@@ -4,16 +4,24 @@ import static click.tagit.detail.DetailActivity.mIsGreviance;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import click.tagit.R;
-import click.tagit.categorized.dummy.DummyContent;
-import click.tagit.categorized.dummy.DummyContent.DummyItem;
+import click.tagit.data.remote.ClickTagitRESTClientSingleton;
+import click.tagit.data.remote.grievance.Data;
+import click.tagit.data.remote.grievance.FileInfoResponse;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import java.io.IOException;
+import retrofit2.HttpException;
 import timber.log.Timber;
 
 /**
@@ -26,9 +34,12 @@ public class CategorizedFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    RecyclerView mRecyclerView;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListCategorizeFragmentInteractionListener mListener;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -45,6 +56,12 @@ public class CategorizedFragment extends Fragment {
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Timber.d("setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "]");
+        mIsGreviance = true;
     }
 
     @Override
@@ -74,17 +91,65 @@ public class CategorizedFragment extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(
-                    new MyCategorizedRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            mRecyclerView = (RecyclerView) view;
         }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Timber.d("onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
+                + savedInstanceState + "]");
+
+        mCompositeDisposable.add(ClickTagitRESTClientSingleton.INSTANCE
+                .getRESTClient()
+                .getFileInfo("categorized")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(
+                        new DisposableObserver<FileInfoResponse>() {
+
+                            @Override
+                            public void onNext(@NonNull FileInfoResponse fileInfoResponse) {
+                                Timber.d("onNext() called with: fileInfoResponse = ["
+                                        + fileInfoResponse + "]");
+
+                                if (fileInfoResponse != null & fileInfoResponse.getStatus() == 200
+                                        & fileInfoResponse.getData() != null) {
+                                    mRecyclerView.setLayoutManager(
+                                            new LinearLayoutManager(getActivity()));
+                                    mRecyclerView
+                                            .setAdapter(new MyCategorizedRecyclerViewAdapter(
+                                                    fileInfoResponse.getData(), mListener));
+                                }
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable throwable) {
+                                Timber.e(throwable, "onError() called: error");
+
+                                // TODO: need error handling
+                                if (throwable instanceof HttpException) {
+                                    // We had non-2XX http error
+                                }
+                                if (throwable instanceof IOException) {
+                                    // A network or conversion error happened
+                                }
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Timber.d("onComplete() called");
+                            }
+                        }));
+
+    }
+
+    @Override
+    public void onDestroy() {
+        mCompositeDisposable.clear();
+        super.onDestroy();
     }
 
     @Override
@@ -106,12 +171,6 @@ public class CategorizedFragment extends Fragment {
     public interface OnListCategorizeFragmentInteractionListener {
 
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        Timber.d("setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "]");
-        mIsGreviance = true;
+        void onListCategorizeFragmentInteraction(Data data);
     }
 }
