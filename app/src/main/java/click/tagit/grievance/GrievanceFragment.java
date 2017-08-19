@@ -119,6 +119,14 @@ public class GrievanceFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
     private void refreshItems() {
         Timber.d("refreshItems() called");
         mCompositeDisposable.add(ClickTagitRESTClientSingleton.INSTANCE

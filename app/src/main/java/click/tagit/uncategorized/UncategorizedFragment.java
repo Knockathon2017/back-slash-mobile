@@ -74,6 +74,14 @@ public class UncategorizedFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListUncategorizedFragmentInteractionListener) {
@@ -143,12 +151,14 @@ public class UncategorizedFragment extends Fragment {
                                             .setAdapter(new MyUncategorizedRecyclerViewAdapter(
                                                     fileInfoResponse.getData(), mListener));
                                 }
+                                mSwipeRefreshLayout.setRefreshing(false);
                             }
 
                             @Override
                             public void onError(@NonNull Throwable throwable) {
                                 Timber.e(throwable, "onError() called: error");
 
+                                mSwipeRefreshLayout.setRefreshing(false);
                                 // TODO: need error handling
                                 if (throwable instanceof HttpException) {
                                     // We had non-2XX http error
@@ -161,6 +171,7 @@ public class UncategorizedFragment extends Fragment {
                             @Override
                             public void onComplete() {
                                 Timber.d("onComplete() called");
+                                mSwipeRefreshLayout.setRefreshing(false);
                             }
                         }));
     }
